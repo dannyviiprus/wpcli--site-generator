@@ -1,0 +1,68 @@
+<?php
+namespace Dvpz\Helpers;
+
+use mikehaertl\shellcommand\Command as ShellCommand;
+
+class Command {
+    /**
+     * @param array $cmds
+     *
+     * @return array
+     */
+    public function cmdExcute(array $cmds) {
+        if (sizeof($cmds) <= 0) {
+            exit;
+        }
+
+        $output = [];
+
+        foreach ($cmds as $cmd) {
+            if (!$cmd instanceof \mikehaertl\shellcommand\Command) {
+                continue;
+            }
+
+            if ($cmd->execute()) {
+                $output[]  = $cmd->getOutput();
+            } else {
+                $output[]  = $cmd->getError();
+                $exitCode = $cmd->getExitCode();
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param $cmd
+     * @param array $args
+     *
+     * @return \mikehaertl\shellcommand\Command
+     */
+    public function getCommand($cmd, $args = [])
+    {
+        $command = new ShellCommand($cmd);
+
+        if (sizeof($args) > 0) {
+            foreach ($args as $key => $value) {
+                $command->addArg('--' . $key . '=', $value);
+            }
+        }
+
+        return $command;
+    }
+
+    /**
+     * @param $numberOfsite
+     * @param $rootDir
+     */
+    public function cleanUp($numberOfsite, $rootDir)
+    {
+        foreach ($numberOfsite as $siteID) {
+            $dbCleanCommand = $this->getCommand('db drop --yes', ['path' => "$rootDir/site$siteID"]);
+
+            $this->cmdExcute([$dbCleanCommand]);
+        }
+
+        (new Common())->delete_directory(__DIR__ . '/sites');
+    }
+}

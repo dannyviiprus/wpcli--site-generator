@@ -1,0 +1,27 @@
+{
+    "name": "dvpz/custom-site-generator",
+    "type": "composer-plugin",
+    "authors": [
+        {
+            "name": "Tran Thanh Duy",
+            "email": "tranthanhduy@mecury.com.vn"
+        }
+    ],
+    "require": {
+        "formr/formr": "^1.4",
+        "mikehaertl/php-shellcommand": "^1.6",
+        "stoutlogic/acf-builder": "^1.12",
+        "wp-cli/wp-cli-bundle": "^2.7"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dvpz\\": "src/"
+        }
+    },
+    "config": {
+        "platform-check": false
+    }
+}

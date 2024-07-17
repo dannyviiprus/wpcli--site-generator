@@ -1,0 +1,13 @@
+{
+  "name": "site-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "dannyvpz",
+  "license": "MIT",
+  "dependencies": {
+    "dir-archiver": "^2.1.0"
+  },
+  "scripts": {
+    "bundle": "dir-archiver --src . --dest ../site-generator.zip --exclude .DS_Store .stylelintrc.json .eslintrc .eslintrc.js .stylelintrc.js .git .gitattributes .github .gitignore composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map yarn.lock .editorconfig"
+  },
+}
